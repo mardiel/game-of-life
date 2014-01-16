@@ -309,10 +309,30 @@
                                     <artifactId>cobertura-maven-plugin</artifactId>
                                     <version>${cobertura.version}</version>
                                     <configuration>
-                                        <formats>
-                                            <format>xml</format>
-                                        </formats>
-                                    </configuration>
+					    <instrumentation>
+					        <includes>
+						        <include>**/When*.class</include>
+						        <include>**/*Test.class</include>
+					        </includes>
+					    </instrumentation>
+					</configuration>
+					<executions>
+					    <execution>
+					        <id>clean</id>
+					        <phase>pre-site</phase>
+					        <goals>
+					            <goal>clean</goal>
+					        </goals>
+					    </execution>
+					    <execution>
+					        <id>instrument</id>
+					        <phase>site</phase>
+					        <goals>
+					            <goal>instrument</goal>
+					            <goal>cobertura</goal>
+					        </goals>
+					    </execution>
+					</executions>
                                 </plugin>
                                 <plugin>
                                     <groupId>org.apache.maven.plugins</groupId>
